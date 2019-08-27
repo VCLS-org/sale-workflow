@@ -151,8 +151,8 @@ class SaleOrderLine(models.Model):
             self.product_id.type == 'service'
             and self.product_id.service_policy == 'delivered_manual'
             and self.product_id.service_tracking == 'task_new_project'
-            #added to maintain fixed price usecase if no rate product sold
-            and self.order_id.order_line.filtered(lambda r: r.product_id.seniority_level_id)
+            # added to maintain fixed price usecase if no rate product sold
+            and not any(l.product_id.seniority_level_id for l in self.order_id.order_line)
         )
     
     @api.multi
