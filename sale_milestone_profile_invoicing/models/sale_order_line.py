@@ -78,16 +78,16 @@ class SaleOrderLine(models.Model):
     def _compute_amount_delivered_from_task(self):
         for line in self:
             total = 0
-            #added to filter timesheet according to the invoiceable ones ()
+            """#added to filter timesheet according to the invoiceable ones ()
             try:
                 line_ts = line._get_timesheet_for_amount_calculation().filter(lambda r: r.id in r.so_line.order_id.timesheet_ids)
                 _logger.info("TS FILTERED BY timsheet_ids ")
             except:
                 line_ts = line._get_timesheet_for_amount_calculation()
-                _logger.info("TS NOT FILTERED BY timsheet_ids ")
-            #for ts in line._get_timesheet_for_amount_calculation():
-            for ts in line_ts:
-                _logger.info("TS {} {}".format(ts.id,ts))
+                _logger.info("TS NOT FILTERED BY timsheet_ids ")"""
+            for ts in line._get_timesheet_for_amount_calculation():
+            #for ts in line_ts:
+                #_logger.info("TS {} {}".format(ts.id,ts))
                 rate_line = ts.project_id.sale_line_employee_ids.filtered(
                     lambda r: r.employee_id == ts.employee_id
                 )
