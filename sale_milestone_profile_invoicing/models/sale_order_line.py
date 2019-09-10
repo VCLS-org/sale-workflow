@@ -50,12 +50,13 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _get_timesheet_for_amount_calculation(self, only_invoiced=False):
-        _logger.info("TS PATH | sale_milestone_profile_invoicing | sale.order.line | _get_timesheet_for_amount_calculation")
         """Return all timesheet line related to the sale order line."""
         self.ensure_one()
         if not self.task_id:
             self.amount_delivered_from_task = 0
-            return []
+            #return [] we replace the empty list return by an empty recordset
+            return self.env['analytic.account.line']
+
         tasks_linked_to_line = self.env['project.task'].search(
             [('sale_line_id', '=', self.id)]
         )
@@ -80,16 +81,7 @@ class SaleOrderLine(models.Model):
         _logger.info("TS PATH | sale_milestone_profile_invoicing | sale.order.line | _compute_amount_delivered_from_task")
         for line in self:
             total = 0
-            """#added to filter timesheet according to the invoiceable ones ()
-            try:
-                line_ts = line._get_timesheet_for_amount_calculation().filter(lambda r: r.id in r.so_line.order_id.timesheet_ids)
-                _logger.info("TS FILTERED BY timsheet_ids ")
-            except:
-                line_ts = line._get_timesheet_for_amount_calculation()
-                _logger.info("TS NOT FILTERED BY timsheet_ids ")"""
             for ts in line._get_timesheet_for_amount_calculation():
-            #for ts in line_ts:
-                #_logger.info("TS {} {}".format(ts.id,ts))
                 rate_line = ts.project_id.sale_line_employee_ids.filtered(
                     lambda r: r.employee_id == ts.employee_id
                 )
