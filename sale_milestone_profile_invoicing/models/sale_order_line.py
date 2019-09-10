@@ -55,7 +55,7 @@ class SaleOrderLine(models.Model):
         if not self.task_id:
             self.amount_delivered_from_task = 0
             #return [] we replace the empty list return by an empty recordset
-            return self.env['analytic.account.line']
+            return self.env['account.analytic.line']
 
         tasks_linked_to_line = self.env['project.task'].search(
             [('sale_line_id', '=', self.id)]
