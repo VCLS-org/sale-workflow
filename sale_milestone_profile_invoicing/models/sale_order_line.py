@@ -111,9 +111,10 @@ class SaleOrderLine(models.Model):
     @api.depends('amount_delivered_from_task', 'product_uom_qty', 'price_unit')
     def _compute_qty_delivered(self):
         """Change qantity delivered for line with a product milestone."""
-        _logger.info("TS PATH | sale_milestone_profile_invoicing | sale.order.line | _compute_qty_delivered")
+        #_logger.info("TS PATH | sale_milestone_profile_invoicing | sale.order.line | _compute_qty_delivered")
         super()._compute_qty_delivered()
         for line in self:
+            _logger.info("DELIVERED BEFORE: {} {}".format(line.name,line.qty_delivered))
             if line._is_linked_to_milestone_product(): 
                 if line.price_unit:
                     line.qty_delivered = (
@@ -121,10 +122,11 @@ class SaleOrderLine(models.Model):
                         * line.amount_delivered_from_task
                         / (line.price_unit)
                     )
+                    _logger.info("DELIVERED AFTER PRICE UNIT: {} {}".format(line.name,line.qty_delivered))
                 else:
-                    _logger.info("DELIVERED BEFORE: {} {}".format(line.name,line.qty_delivered))
+                    
                     line.qty_delivered = 0.
-                    _logger.info("DELIVERED AFTER: {} {}".format(line.name,line.qty_delivered))
+                    _logger.info("DELIVERED AFTER 0: {} {}".format(line.name,line.qty_delivered))
 
     @api.multi
     @api.depends('amount_invoiced_from_task', 'product_uom_qty', 'price_unit')
