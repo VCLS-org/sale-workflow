@@ -124,7 +124,7 @@ class SaleOrderLine(models.Model):
                 else:
                     _logger.info("DELIVERED BEFORE: {} {}".format(line.name,line.qty_delivered))
                     line.qty_delivered = 0.
-                    _logger.info("DELIVERED AFTER: {} {}".format(line.name,line.qty_delivered)")
+                    _logger.info("DELIVERED AFTER: {} {}".format(line.name,line.qty_delivered))
 
     @api.multi
     @api.depends('amount_invoiced_from_task', 'product_uom_qty', 'price_unit')
