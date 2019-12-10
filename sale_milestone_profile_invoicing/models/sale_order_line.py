@@ -107,10 +107,11 @@ class SaleOrderLine(models.Model):
                 total * line.order_id.currency_rate
             )
 
+    """
     @api.multi
     @api.depends('amount_delivered_from_task', 'product_uom_qty', 'price_unit')
     def _compute_qty_delivered(self):
-        """Change qantity delivered for line with a product milestone."""
+        #Change qantity delivered for line with a product milestone.
         #_logger.info("TS PATH | sale_milestone_profile_invoicing | sale.order.line | _compute_qty_delivered")
         super()._compute_qty_delivered()
         for line in self:
@@ -131,7 +132,7 @@ class SaleOrderLine(models.Model):
     @api.multi
     @api.depends('amount_invoiced_from_task', 'product_uom_qty', 'price_unit')
     def _get_invoice_qty(self):
-        """Change qantity invoiced for line with a product milestone."""
+        #Change qantity invoiced for line with a product milestone.
         _logger.info("TS PATH | sale_milestone_profile_invoicing | sale.order.line | _get_invoice_qty")
         super()._get_invoice_qty()
         for line in self:
@@ -144,6 +145,7 @@ class SaleOrderLine(models.Model):
                     )
                 else:
                     line.qty_invoiced = 0.
+    """
 
     @api.multi
     def _is_linked_to_milestone_product(self):
