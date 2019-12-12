@@ -128,7 +128,7 @@ class SaleOrderLine(models.Model):
                     
                     line.qty_delivered = 0.
                     _logger.info("DELIVERED AFTER 0: {} {}".format(line.name,line.qty_delivered))
-
+    """
     @api.multi
     @api.depends('amount_invoiced_from_task', 'product_uom_qty', 'price_unit')
     def _get_invoice_qty(self):
@@ -145,7 +145,7 @@ class SaleOrderLine(models.Model):
                     )
                 else:
                     line.qty_invoiced = 0.
-    """
+    
 
     @api.multi
     def _is_linked_to_milestone_product(self):
