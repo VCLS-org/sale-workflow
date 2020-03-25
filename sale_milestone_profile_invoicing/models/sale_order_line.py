@@ -66,8 +66,7 @@ class SaleOrderLine(models.Model):
         ts = tasks.mapped('timesheet_ids').filtered('employee_id')
         if only_invoiced:
             ts = ts.filtered(
-                lambda r: r.timesheet_invoice_id
-                and r.timesheet_invoice_id.state != 'cancel'
+                lambda r: (r.timesheet_invoice_id and r.timesheet_invoice_id.state != 'cancel') or r.stage_id == 'historical'
             )
         return ts
 
