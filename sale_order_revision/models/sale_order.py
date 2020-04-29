@@ -101,8 +101,8 @@ class SaleOrder(models.Model):
             copied_sale_rec = sale_order_rec.copy_revision_with_context()
 
             msg = _('New revision created: %s') % copied_sale_rec.name
-            copied_sale_rec.message_post(body=msg)
-            sale_order_rec.message_post(body=msg)
+            #copied_sale_rec.message_post(body=msg)
+            #sale_order_rec.message_post(body=msg)
 
             revision_ids.append(copied_sale_rec.id)
 
